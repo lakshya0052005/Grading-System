@@ -1,0 +1,542 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  /* Ultra-modern HSL palette - Base Tokens */
+  --p-hue: 252;
+  --s-hue: 330;
+
+  --primary: hsl(var(--p-hue), 100%, 67%);
+  --primary-dark: hsl(var(--p-hue), 100%, 57%);
+  --primary-transparent: hsla(var(--p-hue), 100%, 67%, 0.1);
+  --primary-gradient: linear-gradient(135deg, hsl(var(--p-hue), 100%, 67%) 0%, hsl(280, 100%, 60%) 100%);
+  --primary-glow: hsla(var(--p-hue), 100%, 67%, 0.5);
+
+  --secondary: hsl(var(--s-hue), 81%, 60%);
+  --secondary-gradient: linear-gradient(135deg, hsl(var(--s-hue), 81%, 60%) 0%, hsl(350, 89%, 60%) 100%);
+
+  --accent: hsl(263, 70%, 50%);
+  --error: hsl(0, 84%, 60%);
+  --success: hsl(150, 100%, 40%);
+  --warning: hsl(38, 92%, 50%);
+
+  /* Typography */
+  --font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Animations */
+  --transition-gentle: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: all 0.2s ease;
+
+  /* Default - Dark Theme Semantic Tokens */
+  --bg-main: hsl(222, 47%, 4%);
+  --bg-body: hsl(222, 47%, 2%);
+  --nav-bg: hsla(222, 47%, 11%, 0.7);
+  --card-bg: hsla(222, 47%, 10%, 0.6);
+  --card-hover: hsla(222, 47%, 15%, 0.8);
+  --card-border: hsla(0, 0%, 100%, 0.1);
+  --card-shadow: 0 30px 60px -12px hsla(0, 0%, 0%, 0.7);
+
+  --text-main: hsl(210, 40%, 98%);
+  --text-muted: hsl(215, 20%, 65%);
+  --text-inv: hsl(222, 47%, 4%);
+
+  --input-bg: hsla(222, 47%, 8%, 0.8);
+  --input-border: hsla(0, 0%, 100%, 0.1);
+
+  --glass-blur: blur(25px) saturate(200%);
+  --neon-glow: 0 0 20px hsla(var(--p-hue), 100%, 67%, 0.3);
+}
+
+/* Light Theme overrides */
+[data-theme="light"] {
+  --bg-main: hsl(210, 40%, 98%);
+  --bg-body: hsl(210, 30%, 95%);
+  --nav-bg: hsla(210, 40%, 100%, 0.8);
+  --card-bg: hsla(0, 0%, 100%, 0.8);
+  --card-hover: hsla(0, 0%, 100%, 0.95);
+  --card-border: hsla(var(--p-hue), 25%, 60%, 0.2);
+  --card-shadow: 0 15px 35px -5px hsla(0, 0%, 0%, 0.08), 0 0 0 1px hsla(var(--p-hue), 25%, 80%, 0.1);
+
+  --text-main: hsl(222, 47%, 12%);
+  --text-muted: hsl(215, 20%, 35%);
+  --text-inv: hsl(0, 0%, 100%);
+
+  --primary: hsl(var(--p-hue), 85%, 55%);
+  --primary-gradient: linear-gradient(135deg, hsl(var(--p-hue), 85%, 55%) 0%, hsl(280, 80%, 50%) 100%);
+  --primary-glow: hsla(var(--p-hue), 85%, 55%, 0.3);
+
+  --input-bg: hsla(0, 0%, 100%, 0.9);
+  --input-border: hsla(var(--p-hue), 25%, 60%, 0.3);
+
+  --glass-blur: blur(15px) saturate(150%);
+  --neon-glow: 0 0 20px hsla(var(--p-hue), 85%, 55%, 0.15);
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-body);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  overflow-x: hidden;
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.5s ease;
+}
+
+/* Custom Scrollbar - Modernized */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-body);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-transparent);
+  border-radius: 20px;
+  border: 3px solid var(--bg-body);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--card-border);
+  border-radius: 32px;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition-gentle);
+  overflow: hidden;
+}
+
+.glass-card:hover {
+  border-color: hsla(var(--p-hue), 100%, 67%, 0.3);
+  transform: translateY(-8px) scale(1.01);
+  background: var(--card-hover);
+}
+
+.glow-button {
+  position: relative;
+  background: var(--primary-gradient);
+  color: var(--text-inv);
+  padding: 18px 36px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 10px 25px var(--primary-glow);
+  transition: var(--transition-gentle);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+
+.glow-button:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 15px 40px var(--primary-glow);
+  filter: brightness(1.1);
+}
+
+.glow-button:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.mesh-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  background: var(--bg-body);
+  transition: background 0.5s ease;
+}
+
+.mesh-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 10% 10%, hsla(var(--p-hue), 100%, 20%, 0.4), transparent 40%),
+    radial-gradient(circle at 90% 90%, hsla(var(--s-hue), 81%, 20%, 0.4), transparent 40%),
+    radial-gradient(circle at 50% 50%, hsla(263, 70%, 15%, 0.3), transparent 60%);
+  filter: blur(80px);
+  animation: mesh-rotate 30s linear infinite;
+}
+
+[data-theme="light"] .mesh-bg::after {
+  background:
+    radial-gradient(circle at 10% 10%, hsla(var(--p-hue), 40%, 40%, 0.1), transparent 40%),
+    radial-gradient(circle at 90% 90%, hsla(var(--s-hue), 35%, 40%, 0.1), transparent 40%),
+    radial-gradient(circle at 50% 50%, hsla(263, 30%, 35%, 0.08), transparent 60%);
+}
+
+@keyframes mesh-rotate {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  50% {
+    transform: scale(1.2) rotate(180deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+.grid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image:
+    linear-gradient(var(--primary-transparent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--primary-transparent) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+  opacity: 0.5;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #6366f1, #a855f7, #f43f5e, #6366f1);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 6s linear infinite;
+}
+
+[data-theme="light"] .gradient-text {
+  background: linear-gradient(90deg, #4f46e5, #7c3aed, #db2777, #4f46e5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 300% auto;
+}
+
+@keyframes shine {
+  to {
+    background-position: 300% center;
+  }
+}
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  transition: var(--transition-fast);
+  padding: 8px 16px;
+  border-radius: 12px;
+}
+
+.nav-link:hover {
+  color: var(--text-main);
+  background: var(--primary-transparent);
+}
+
+.nav-link.active {
+  color: var(--primary);
+  background: var(--primary-transparent);
+}
+
+/* Form Styles Elite */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.input-area {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 18px;
+  color: var(--text-main);
+  padding: 18px;
+  outline: none;
+  font-size: 1rem;
+  transition: var(--transition-gentle);
+  backdrop-filter: blur(10px);
+}
+
+.input-area:focus {
+  border-color: var(--primary);
+  background: var(--card-hover);
+  box-shadow: var(--neon-glow);
+  transform: translateY(-2px);
+}
+
+.label-text {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-left: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Floating Elements */
+.float {
+  animation: floating 6s ease-in-out infinite;
+}
+
+@keyframes floating {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+}
+
+.pulse {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.5;
+    filter: blur(2px);
+  }
+
+  50% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+/* Utils */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Loading Spinner Elite */
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--primary-transparent);
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .glass-card {
+    border-radius: 24px;
+    margin: 10px;
+  }
+
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* Additional responsive improvements */
+@media (max-width: 1400px) {
+  .glass-card {
+    padding: 40px;
+  }
+
+  .input-area {
+    padding: 16px;
+  }
+
+  .glow-button {
+    padding: 16px 32px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .glass-card {
+    padding: 35px;
+  }
+
+  .input-area {
+    padding: 15px;
+  }
+
+  .glow-button {
+    padding: 14px 28px;
+  }
+
+  h2.gradient-text {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .glass-card {
+    padding: 30px;
+    margin: 15px;
+  }
+
+  .input-area {
+    padding: 14px;
+  }
+
+  .glow-button {
+    padding: 13px 26px;
+  }
+
+  h2.gradient-text {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .glass-card {
+    margin: 10px;
+    padding: 25px;
+    border-radius: 20px;
+  }
+
+  .input-area {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+
+  .glow-button {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+
+  .form-group {
+    gap: 8px;
+  }
+
+  .label-text {
+    font-size: 0.8rem;
+    margin-left: 6px;
+  }
+
+  .app {
+    padding: 10px;
+  }
+
+  nav {
+    padding: 12px 20px !important;
+    flex-wrap: wrap;
+  }
+
+  h2.gradient-text {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .glass-card {
+    margin: 8px;
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .input-area {
+    padding: 11px;
+    font-size: 0.85rem;
+  }
+
+  .glow-button {
+    padding: 11px 22px;
+    font-size: 0.85rem;
+  }
+
+  .label-text {
+    font-size: 0.75rem;
+    margin-left: 5px;
+  }
+
+  .nav-link {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  h2.gradient-text {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .glass-card {
+    margin: 5px;
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .input-area {
+    padding: 10px;
+    font-size: 0.8rem;
+  }
+
+  .glow-button {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+  }
+
+  .label-text {
+    font-size: 0.7rem;
+    margin-left: 4px;
+  }
+
+  .nav-link {
+    padding: 7px 10px;
+    font-size: 0.8rem;
+  }
+
+  h2.gradient-text {
+    font-size: 1.8rem;
+  }
+
+  .app>div {
+    padding: 5px;
+  }
+}
